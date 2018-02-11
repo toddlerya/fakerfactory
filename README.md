@@ -16,3 +16,6 @@
 * 目前正在学习Golang，学习一门语言的最好方法就是多用，上手干活！
 
 
+## 鸣谢
+- [gofakeit](https://github.com/brianvoe/gofakeit) Random fake data generator written in go.
+- [faker](https://github.com/joke2k/faker) Faker is a Python package that generates fake data for you.
