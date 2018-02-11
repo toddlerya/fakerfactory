@@ -2,14 +2,17 @@ package faker
 
 import (
 	"fmt"
+	"testing"
 )
 
 func ExampleColor() {
 	Seed(11)
-	fmt.Println(SafeColor_zh_CN())
-	// Output: MediumOrchid
+	fmt.Println(Color("zh_CN"))
+	// Output: 黑色
 }
 
-func main() {
-	ExampleColor()
+func BenchmarkColor(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Color("zh_CN")
+	}
 }
