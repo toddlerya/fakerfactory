@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/toddlerya/FakerHub/faker"
+	"github.com/toddlerya/FakerHub/server"
 )
 
 func main() {
@@ -11,4 +12,5 @@ func main() {
 	fmt.Println(faker.Color("zh_CN"))
 	fmt.Println(faker.Color("en_US"))
 	fmt.Println(faker.UserAgent())
+	server.StartServer()
 }
