@@ -2,7 +2,7 @@ package data
 
 // Data consists of the main set of fake information
 var Data = map[string]map[string][]string{
-	//	"person":   Person,
+	"person": Person,
 	//	"contact":  Contact,
 	//	"address":  Address,
 	//	"company":  Company,
