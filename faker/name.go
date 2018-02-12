@@ -23,13 +23,31 @@ func Name(langs ...string) string {
 }
 
 // FirstName will generate a random first name
-func FirstName() string {
-	return getRandValue([]string{"person", "first"})
+func FirstName(langs ...string) string {
+	// lang: zh_CN --> 中文
+	// lang: en_US --> 英文
+	lang := langs[rand.Intn(len(langs))]
+	first := strings.Join([]string{lang, "first"}, "_")
+	switch lang {
+	case "en_US", "zh_CN":
+		return getRandValue([]string{"person", first})
+	default:
+		return "未知的语言类型[姓氏报错]"
+	}
 }
 
 // LastName will generate a random last name
-func LastName() string {
-	return getRandValue([]string{"person", "last"})
+func LastName(langs ...string) string {
+	// lang: zh_CN --> 中文
+	// lang: en_US --> 英文
+	lang := langs[rand.Intn(len(langs))]
+	last := strings.Join([]string{lang, "last"}, "_")
+	switch lang {
+	case "en_US", "zh_CN":
+		return getRandValue([]string{"person", last})
+	default:
+		return "未知的语言类型[名字报错]"
+	}
 }
 
 // NamePrefix will generate a random name prefix
