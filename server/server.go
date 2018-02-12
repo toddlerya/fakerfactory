@@ -37,7 +37,7 @@ func GetFaker(c *gin.Context) {
 				"records": "请输入有效的参数"},
 		})
 	} else {
-		results, count := fakerData(columns, number)
+		records, count := fakerData(columns, number)
 
 		startTime := time.Now()
 		costTime := time.Now().Sub(startTime)
@@ -48,8 +48,8 @@ func GetFaker(c *gin.Context) {
 				"status": "ok",
 				"code":   "0"},
 			"data": gin.H{
-				"number":  count,
-				"records": results},
+				"count":   count,
+				"records": records},
 		})
 	}
 
@@ -66,14 +66,10 @@ func fakerData(columns, number string) ([]map[string]string, int) {
 	for i := 0; i < fakerNumber; i++ {
 		resultMap := make(map[string]string)
 		for _, col := range itemCols {
-			resultMap[col] = matchFaker(col)
-			fmt.Printf("resultMap: %v\n", resultMap)
-
+			resultMap[col] = matchFaker(strings.ToLower(col))
 		}
 		results = append(results, resultMap)
-
 	}
-	fmt.Printf("results: %v\n", results)
 	count := len(results)
 	return results, count
 }
@@ -84,6 +80,12 @@ func matchFaker(col string) string {
 		return faker.Color("zh_CN")
 	case "name":
 		return faker.Name("zh_CN")
+	case "age":
+		return "暂未支持"
+	case "sex":
+		return "暂未支持"
+	case "job":
+		return "暂未支持"
 	default:
 		return "未知字段, 请检查输入参数"
 	}
