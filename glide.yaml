@@ -1,0 +1,4 @@
+package: github.com/toddlerya/FakerHub
+import:
+- package: github.com/gin-gonic/gin
+  version: v1.2
