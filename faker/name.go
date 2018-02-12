@@ -51,11 +51,11 @@ func LastName(langs ...string) string {
 }
 
 // NamePrefix will generate a random name prefix
-func NamePrefix() string {
-	return getRandValue([]string{"person", "prefix"})
-}
+//func NamePrefix() string {
+//	return getRandValue([]string{"person", "prefix"})
+//}
 
 // NameSuffix will generate a random name suffix
-func NameSuffix() string {
-	return getRandValue([]string{"person", "suffix"})
-}
+//func NameSuffix() string {
+//	return getRandValue([]string{"person", "suffix"})
+//}
