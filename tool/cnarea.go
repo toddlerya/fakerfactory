@@ -63,12 +63,12 @@ func exetractMySQL() ([]map[string]string, int) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("共计%d条数据\n", dataNumber)
+	//	fmt.Printf("共计%d条数据\n", dataNumber)
 
 	var data []map[string]string
 
 	// 查询
-	querySql := "SELECT area_code, zip_code, city_code, name, short_name, merger_name, lng, lat FROM cnarea_2016 WHERE level = 4 LIMIT 10"
+	querySql := "SELECT area_code, zip_code, city_code, name, short_name, merger_name, lng, lat FROM cnarea_2016 WHERE level = 4"
 	rows, err := db.Query(querySql)
 	if err != nil {
 		log.Fatal(err)
@@ -107,15 +107,25 @@ func loadSqlite(data []map[string]string) {
 	}
 	defer db.Close()
 
-	for col, num := range data {
-		fmt.Println(col, num)
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
 	}
+	stmt, err := tx.Prepare("insert into cnarea_2016(area_code, zip_code, city_code, areaname, name, short_name, lng, lat) values(?, ?, ?, ?, ?, ?, ?, ?)")
+	defer stmt.Close()
 
+	for _, row := range data {
+		_, err = stmt.Exec(row["area_code"], row["zip_code"], row["city_code"], row["areaname"], row["name"], row["short_name"], row["lng"], row["lat"])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	tx.Commit()
 }
 
 func main() {
 	initSqlite()
 	mysqlData, dataNum := exetractMySQL()
-	fmt.Printf("total columns: %d", dataNum)
+	fmt.Printf("total rows: %d\n", dataNum)
 	loadSqlite(mysqlData)
 }
