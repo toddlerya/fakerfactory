@@ -45,7 +45,7 @@ func initSqlite() {
 }
 
 func exetractMySQL() ([]map[string]string, int) {
-	db, err := sql.Open("mysql", "evi1:w5nbb@tcp(192.168.1.108:3306)/fakerhub?charset=utf8")
+	db, err := sql.Open("mysql", "user:passwd@tcp(192.168.1.108:3306)/fakerhub?charset=utf8")
 	if err != nil {
 		log.Fatal(err)
 	}
