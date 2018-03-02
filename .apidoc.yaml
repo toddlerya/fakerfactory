@@ -1,0 +1,11 @@
+version: 4.0.0-alpha
+inputs:
+- lang: go
+  dir: H:\GoCodes\src\github.com\toddlerya\FakerHub
+  exts:
+  - .go
+  recursive: true
+output:
+  dir: H:\GoCodes\src\github.com\toddlerya\FakerHub\doc
+  type: html
+  port: :9999
