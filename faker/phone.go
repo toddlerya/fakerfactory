@@ -5,7 +5,7 @@ import (
 	"math/rand"
 )
 
-func Phone(langs ...string) string {
+func MobilePhone(langs ...string) string {
 	// lang: zh_CN --> 中文
 	// lang: en_US --> 英文
 	lang := langs[rand.Intn(len(langs))]

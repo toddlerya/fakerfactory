@@ -1,5 +1,10 @@
 package faker
 
-func Age() {
+import (
+	"strconv"
+)
 
+func Age() string {
+	age := strconv.Itoa(Number(0, 105))
+	return age
 }
