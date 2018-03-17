@@ -130,10 +130,10 @@ func matchFaker(col string, c *sql.DB) string {
 		return faker.IPv4Address()
 	case "ipv6":
 		return faker.IPv6Address()
-	case "mac": // 固定12位，0-9数字+[A-F]或[a-f]
-		return "暂未支持"
-	case "imsi": // IMSI：国内为460开头、<=15位、纯数字 （国内一般为15位，国际规范为不超过15位）
-		return "暂未支持"
+	case "mac": // 暂时随机返回各种类型的MAC地址
+		return faker.RandMacAddress()
+	case "imsi": // 暂时只提供460开头的中国imsi
+		return faker.Imsi()
 	case "imei": // IMEI（GSM网络）即EQUIREMENT_ID，固定15位、纯数字
 		return "暂未支持"
 	case "meid": // MEID（CDMA网络）：固定14位，16进制，数字+[A-F]或[a-f]

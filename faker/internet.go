@@ -55,6 +55,40 @@ func IPv6Address() string {
 	return fmt.Sprintf("2001:cafe:%x:%x:%x:%x:%x:%x", rand.Intn(num), rand.Intn(num), rand.Intn(num), rand.Intn(num), rand.Intn(num), rand.Intn(num))
 }
 
+// MacAddress will generate a random mac address
+// 根据sep确定分隔符, letterType=true返回大写字母, false返回小写字母
+func MacAddress(sep string, lettterType bool) string {
+	// 固定12位, 0-9数字+[A-F]或[a-f]
+	// 【备注：MAC地址16进制中的第一个字节和第二个数字一定是偶数, 即对应到十六进制为0、2、4、6、8、A、C、E中的一个】
+	simpleValue := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"}
+	specialValue := []string{"0", "2", "4", "6", "8", "A", "C", "E"}
+	macSlice := []string{}
+	var temp string
+	for i := 0; i < 17; i++ {
+		switch i {
+		case 1:
+			temp = RandString(specialValue)
+		case 2, 5, 8, 11, 14:
+			temp = sep
+		default:
+			temp = RandString(simpleValue)
+		}
+		macSlice = append(macSlice, temp)
+	}
+	macStr := strings.Join(macSlice, "")
+	if !lettterType {
+		macStr = strings.ToLower(macStr)
+	}
+	return macStr
+}
+
+// 随机返回大小写, 多种分隔符的mac地址
+func RandMacAddress() string {
+	sep := RandString([]string{"-", ":"})
+	lowUp := RandBool([]bool{true, false})
+	return MacAddress(sep, lowUp)
+}
+
 // Username will genrate a random username based upon picking a random lastname and random numbers at the end
 func UserName() string {
 	return getRandValue([]string{"person", "en_US_last"}) + replaceWithNumbers("####")

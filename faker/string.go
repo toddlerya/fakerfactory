@@ -24,3 +24,8 @@ func ShuffleStrings(a []string) {
 func RandString(a []string) string {
 	return a[rand.Intn(len(a))]
 }
+
+// RandBool will take in a slice of bool and return a randomly selected value
+func RandBool(a []bool) bool {
+	return a[rand.Intn(len(a))]
+}
