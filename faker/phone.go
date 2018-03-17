@@ -3,6 +3,7 @@ package faker
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 func MobilePhone(langs ...string) string {
@@ -34,6 +35,23 @@ func Imei() string {
 	// SNR: 由第9位数字开始的6位数字组成
 	// CD:  验证码，由前14位数字通过Luhn算法得出
 	// SVN: 软件版本号，仅在部分机型中存在
+	tacPrefixSlice := []string{"86", "35", "01"}
+	tacPrefix := RandString(tacPrefixSlice)
+	tacSuffix := fmt.Sprintf("%06d", Number(1, 999999))
+	tac := tacPrefix + tacSuffix
+	snr := fmt.Sprintf("%06d", Number(1, 999999))
+	preNumStr := tac + snr
+	preNumSlice := []int{}
+	for _, v := range preNumStr {
+		temp, err := strconv.Atoi(string(v))
+		if err != nil {
+			panic(err)
+		}
+		preNumSlice = append(preNumSlice, temp)
+	}
+	checkNum := Luhn(preNumSlice)
+	checkNumStr := strconv.Itoa(checkNum)
+	return preNumStr + checkNumStr
 }
 
 // Luhn算法
@@ -41,12 +59,21 @@ func Luhn(preNumArr []int) int {
 	total := 0
 	temp := 0
 	preNumArr = append(preNumArr, 0) // 补充校验数字占位
-	fmt.Println(preNumArr)
 	length := len(preNumArr)
 
 	for i := length - 1; i > -1; i-- {
 		if i%2 != 0 { // 原始数组的第奇数个乘以二，若新数字大于9则减去9
-
+			temp = preNumArr[i] * 2
+			if temp > 9 {
+				temp = temp - 9
+			}
+		} else {
+			temp = preNumArr[i]
 		}
+		total += temp
 	}
+	total = total * 9
+	totalStr := strconv.Itoa(total)
+	checkNum, _ := strconv.Atoi(totalStr[len(totalStr)-1:])
+	return checkNum
 }
