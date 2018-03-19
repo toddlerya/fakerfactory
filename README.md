@@ -44,7 +44,8 @@
 | 24   |    ipv6     | ipv6的点分型IP地址                          |
 | 25   |  useragent  | 浏览器请求头                                |
 
-
+## 用法
+http://{IP}:8001/api/v1/fakerhub?number={数据条数}&columns=mac,imsi,imei,......
 
 ## 使用效果
 

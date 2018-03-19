@@ -89,6 +89,30 @@ func RandMacAddress() string {
 	return MacAddress(sep, lowUp)
 }
 
+// MEID（CDMA网络）：固定14位，16进制
+// letterType=true返回大写字母，false返回小写字母
+func Meid(letterType bool) string {
+	// MEID = RR + XXXXXX + ZZZZZZ + C/CD
+	// RR:     范围A0-FF，由官方分配，对应的十进制范围为[160, 255]
+	// XXXXXX: 范围000000-FFFFFF，由官方分配，对应的十进制范围为[0, 16777215]
+	// ZZZZZZ: 范围000000-FFFFFF，厂商分配给每台终端的流水号，对应的十进制范围为[0, 16777215]
+	// C/CD: 0-F, 校验码，不参与空中传输（忽略不处理）
+	rr := fmt.Sprintf("%02x", Number(160, 255))
+	xx := fmt.Sprintf("%06x", Number(0, 16777215))
+	zz := fmt.Sprintf("%06x", Number(0, 16777215))
+	meid := rr + xx + zz
+	if !letterType {
+		meid = strings.ToUpper(meid)
+	}
+	return meid
+}
+
+// 随机范围大小写的MEID
+func RandMeid() string {
+	lowUp := RandBool([]bool{true, false})
+	return Meid(lowUp)
+}
+
 // Username will genrate a random username based upon picking a random lastname and random numbers at the end
 func UserName() string {
 	return getRandValue([]string{"person", "en_US_last"}) + replaceWithNumbers("####")

@@ -134,10 +134,10 @@ func matchFaker(col string, c *sql.DB) string {
 		return faker.RandMacAddress()
 	case "imsi": // 暂时只提供460开头的中国imsi
 		return faker.Imsi()
-	case "imei": // IMEI（GSM网络）即EQUIREMENT_ID，固定15位、纯数字
-		return "暂未支持"
-	case "meid": // MEID（CDMA网络）：固定14位，16进制，数字+[A-F]或[a-f]
-		return "暂未支持"
+	case "imei":
+		return faker.Imei()
+	case "meid":
+		return faker.RandMeid()
 	case "deviceid": //采集设备ID、固定21位、前9位为安全厂商ID（如FIBERHOME），后12位为采集设备MAC，规则同MAC、所有字母大写
 		return "暂未支持"
 	case "date": // 时间字段,两种，10位绝对秒(当天数据)，数据库日期格式{YYYYMMDD,hh:mm:ss}
