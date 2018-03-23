@@ -56,10 +56,10 @@ func IPv6Address() string {
 }
 
 // MacAddress will generate a random mac address
-// 根据sep确定分隔符, letterType=true返回大写字母, false返回小写字母
-func MacAddress(sep string, lettterType bool) string {
-	// 固定12位, 0-9数字+[A-F]或[a-f]
-	// 【备注：MAC地址16进制中的第一个字节和第二个数字一定是偶数, 即对应到十六进制为0、2、4、6、8、A、C、E中的一个】
+// 根据sep确定分隔符返回, letterType=true返回大写字母, false返回小写字母
+func MacAddress(sep string, letterType bool) string {
+	// 固定12位，0-9数字+[A-F]或[a-f]
+	// 【备注：MAC地址16进制中的第一个字节的第二个数字一定是偶数，即对应到十六进制为0、2、4、6、8、A、C、E中的一个】
 	simpleValue := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"}
 	specialValue := []string{"0", "2", "4", "6", "8", "A", "C", "E"}
 	macSlice := []string{}
@@ -76,41 +76,27 @@ func MacAddress(sep string, lettterType bool) string {
 		macSlice = append(macSlice, temp)
 	}
 	macStr := strings.Join(macSlice, "")
-	if !lettterType {
+	if !letterType {
 		macStr = strings.ToLower(macStr)
 	}
 	return macStr
 }
 
-// 随机返回大小写, 多种分隔符的mac地址
+// 随机返回大小写，多种分隔符的mac地址
 func RandMacAddress() string {
 	sep := RandString([]string{"-", ":"})
 	lowUp := RandBool([]bool{true, false})
 	return MacAddress(sep, lowUp)
+
 }
 
-// MEID（CDMA网络）：固定14位，16进制
-// letterType=true返回大写字母，false返回小写字母
-func Meid(letterType bool) string {
-	// MEID = RR + XXXXXX + ZZZZZZ + C/CD
-	// RR:     范围A0-FF，由官方分配，对应的十进制范围为[160, 255]
-	// XXXXXX: 范围000000-FFFFFF，由官方分配，对应的十进制范围为[0, 16777215]
-	// ZZZZZZ: 范围000000-FFFFFF，厂商分配给每台终端的流水号，对应的十进制范围为[0, 16777215]
-	// C/CD: 0-F, 校验码，不参与空中传输（忽略不处理）
-	rr := fmt.Sprintf("%02x", Number(160, 255))
-	xx := fmt.Sprintf("%06x", Number(0, 16777215))
-	zz := fmt.Sprintf("%06x", Number(0, 16777215))
-	meid := rr + xx + zz
-	if !letterType {
-		meid = strings.ToUpper(meid)
-	}
-	return meid
-}
-
-// 随机范围大小写的MEID
-func RandMeid() string {
+// //采集设备ID、固定21位、前9位为安全厂商ID（如FIBERHOME），后12位为采集设备MAC，规则同MAC、所有字母大写
+func DeviceID() string {
 	lowUp := RandBool([]bool{true, false})
-	return Meid(lowUp)
+	companySlice := []string{"FIBERHOME", "TAIJIXXXX", "MEIYAXXXXX", "ZHAOWUXXX"}
+	com := RandString(companySlice)
+	mac := MacAddress("", lowUp)
+	return com + mac
 }
 
 // Username will genrate a random username based upon picking a random lastname and random numbers at the end

@@ -1,6 +1,20 @@
 package faker
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
+
+// 当前时间戳
+func NowTimeStamp() string {
+	t := time.Now()
+	return strconv.FormatInt(t.Unix(), 10)
+}
+
+func NowDate() string {
+	dateStr := time.Now().Format("20060102,15:04:05")
+	return dateStr
+}
 
 // Date will generate a random time.Time struct
 func Date() time.Time {

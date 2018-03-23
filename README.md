@@ -42,16 +42,74 @@
 | 22   | flightseat  | 飞机座号                                  |
 | 23   |    ipv4     | ipv4的点分型IP地址                          |
 | 24   |    ipv6     | ipv6的点分型IP地址                          |
-| 25   |  useragent  | 浏览器请求头                                |
-
-## 用法
-http://{IP}:8001/api/v1/fakerhub?number={数据条数}&columns=mac,imsi,imei,......
+| 25   |     mac     | mac地址（随机大小写，分隔符）                |
+| 26   |  useragent  | 浏览器请求头                                |
+| 27   |    imsi     | IMSI（目前只支持国内460开头的）              |
+| 28   |    imei     | IMEI（目前支持中国、英国、美国）             |
+| 29   |    meid     | MEID（随机大小写）                         |
+| 30   |  deviceid   | DEVICEID（设备编号）                         |
+| 31   |  telphone   | 固定电话（暂时只支持国内号码）                 |
+| 32   |  citycode   | 国内长途区号                                 |
+| 33   |specialphone | 特殊电话号码（比如10086、110）                |
+| 34   | capturetime | 当前时间绝对秒（10位数字）                      |
+| 35   |   date      | 当前时间，数据库日期格式{YYYYMMDD,hh:mm:ss}    |
 
 ## 使用效果
 
 ![](media/snipaste_20180306_152605.png)
 
+## [小试一下](http://172.16.5.43:8001/api/v1/fakerhub?number=1&columns=color,job,name,sex,address,idcard,age,mobilephone,email,imid,nickname,username,password,website,url,airport,voyage,airlineinfo,traintrips,trainseat,flightseat,ipv4,ipv6,useragent,mac,imsi,imei,meid,deviceid,telphone,citycode,specialphone,capturetime,date)
 
+## 性能评估
+
+### FakerHub所在服务器硬件情况
+
+| 硬件   | 详情                                       |
+| ---- | ---------------------------------------- |
+| CPU  | 4 核 Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz |
+| MEM  | 8G                                       |
+| NET  | 10000Mb/s                                |
+
+### 使用ab对接口进行压测
+
+| 参数项  | 参数值                          |
+| ---- | ---------------------------- |
+| 请求条件 | 每条数据返回24个字段，一次GET请求返回1000条数据 |
+| 请求次数 | 10000                        |
+| 并发   | 20                           |
+
+  ![](media/FakerHub-24column-20level.png)
+
+  ab测试结果解读：
+
+  - 模拟构造API请求随机生成10000000（1000 x 10000）条数据，耗时278.518秒。
+  - 生成数据总量约7.28 GB（7821829529 bytes）
+  - 吞吐率（Requests per second）： 35.90 
+  - 用户平均请求等待时间（Time per request）：557.037 ms
+  - 服务器平均请求处理时间（Time per request，across all concurrent requests）：27.852 ms
+  - 90%的请求耗时低于662 ms
+
+### 服务器性能表现
+
+  FakerHub运行对CPU的资源消耗比较大，下面三个图为ab压测五分钟的硬件使用率
+
+  - CPU
+
+    ![](media/CPU使用率.png)
+
+    - MEM
+
+      ![](media/内存使用率.png)
+
+    - NET
+
+      ![](media/网络情况.png)
+	
+	
+### 环境依赖
+- 开发环境：go1.9以上
+- 运行环境：直接使用发布的二进制文件即可
+	
 ## 鸣谢
 - [gofakeit](https://github.com/brianvoe/gofakeit) Random fake data generator written in go.
 - [faker](https://github.com/joke2k/faker) Faker is a Python package that generates fake data for you.

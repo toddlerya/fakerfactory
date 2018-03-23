@@ -34,7 +34,7 @@ func GetFaker(c *gin.Context) {
 				"status": "error",
 				"code":   "100"},
 			"data": gin.H{
-				"number":  nil,
+				"count":   nil,
 				"records": "请输入有效的参数"},
 		})
 	} else {
@@ -56,10 +56,6 @@ func GetFaker(c *gin.Context) {
 }
 
 func fakerData(columns, number string) ([]map[string]string, int) {
-	//	dbPath := `./faker/data/data.db`
-	//	var Conn *sql.DB = faker.CreateConn(dbPath) // 不应该在这里建立连接, 每次请求都会建立连接, 资源消耗比较多, 后续改进
-	//	defer Conn.Close()
-
 	itemCols := strings.Split(columns, ",")
 	fakerNumber, err := strconv.Atoi(number)
 	if err != nil {
@@ -92,6 +88,8 @@ func matchFaker(col string, c *sql.DB) string {
 		return faker.Gender("zh_CN")
 	case "address":
 		return faker.Address(c)
+	case "citycode": // 中国长途区号
+		return faker.CityCode()
 	case "idcard":
 		return faker.IdCard()
 	case "age":
@@ -99,7 +97,9 @@ func matchFaker(col string, c *sql.DB) string {
 	case "mobilephone": // 移动电话
 		return faker.MobilePhone("zh_CN")
 	case "telphone": // 固定电话
-		return "暂未支持"
+		return faker.TelPhone("zh_CN")
+	case "specialphone": // 特殊号码，比如95555招商银行,10086中国移动
+		return faker.SpecialTellPhone()
 	case "email":
 		return faker.Email()
 	case "imid":
@@ -132,16 +132,18 @@ func matchFaker(col string, c *sql.DB) string {
 		return faker.IPv6Address()
 	case "mac": // 暂时随机返回各种类型的MAC地址
 		return faker.RandMacAddress()
-	case "imsi": // 暂时只提供460开头的中国imsi
+	case "imsi": // 暂时只支持国内imsi
 		return faker.Imsi()
-	case "imei":
+	case "imei": //
 		return faker.Imei()
-	case "meid":
+	case "meid": // 随机大小写
 		return faker.RandMeid()
 	case "deviceid": //采集设备ID、固定21位、前9位为安全厂商ID（如FIBERHOME），后12位为采集设备MAC，规则同MAC、所有字母大写
-		return "暂未支持"
-	case "date": // 时间字段,两种，10位绝对秒(当天数据)，数据库日期格式{YYYYMMDD,hh:mm:ss}
-		return "暂未支持"
+		return faker.DeviceID()
+	case "date": // 数据库日期格式{YYYYMMDD,hh:mm:ss}  (当前时间)
+		return faker.NowDate()
+	case "capturetime": // 10位绝对秒(当前时间)
+		return faker.NowTimeStamp()
 	case "useragent":
 		return faker.UserAgent()
 	case "gapassport":
