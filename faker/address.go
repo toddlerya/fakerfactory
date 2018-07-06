@@ -4,14 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"math/rand"
 	"strings"
 )
 
 func AddressColumns(conn *sql.DB, columns ...string) []map[string]string {
 
-	//	num := UidArray[rand.Intn(len(data.UidArray))]
-	num := rand.Intn(752233)
+    num := Number(1, 752233)
 	cols := strings.Join(columns, ",")
 	var err error
 	var queryRows []map[string]string

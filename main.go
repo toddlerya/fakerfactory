@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/toddlerya/FakerHub/faker"
+	"github.com/toddlerya/fakerfactory/faker"
 )
 
 var dbPath string = `./faker/data/data.db`
@@ -17,7 +17,7 @@ func StartServer() {
 	router := gin.Default()
 	v1 := router.Group("api/v1")
 	{
-		v1.GET("/fakerhub", GetFaker)
+		v1.GET("/fakerfactory", GetFaker)
 	}
 	router.Run(":8001")
 }

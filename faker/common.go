@@ -3,7 +3,7 @@ package faker
 import (
 	"math/rand"
 
-	"github.com/toddlerya/FakerHub/faker/data"
+	"github.com/toddlerya/fakerfactory/faker/data"
 )
 
 // Check if in lib
