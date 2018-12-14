@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/toddlerya/fakerfactory/faker"
 )
@@ -15,6 +16,7 @@ var Conn *sql.DB = faker.CreateConn(dbPath) // 不应该在这里建立连接, �
 
 func StartServer() {
 	router := gin.Default()
+	router.Use(cors.Default()) // 允许任何服务ajax跨域调用
 	v1 := router.Group("api/v1")
 	{
 		v1.GET("/fakerfactory", GetFaker)
