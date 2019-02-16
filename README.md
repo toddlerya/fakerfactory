@@ -65,7 +65,7 @@ http://{IP}:8001/api/v1/fakerfactory?number={条数}&columns={字段参数[多�
 
 ## 使用效果
 
-![](media/snipaste_20180523_093453.png)
+![](media/Xnip2019-02-16_10-06-23.jpg)
 
 
 ## 性能评估
@@ -105,13 +105,13 @@ http://{IP}:8001/api/v1/fakerfactory?number={条数}&columns={字段参数[多�
 
     ![](media/CPU使用率.png)
 
-    - MEM
+  - MEM
 
-      ![](media/内存使用率.png)
+    ![](media/内存使用率.png)
 
-    - NET
+  - NET
 
-      ![](media/网络情况.png)
+    ![](media/网络情况.png)
 
 ### 环境依赖
 - 开发环境：go1.9以上

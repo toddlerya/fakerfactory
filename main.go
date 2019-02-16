@@ -57,7 +57,7 @@ func GetFaker(c *gin.Context) {
 
 }
 
-func fakerData(columns, number string) ([]map[string]string, int) {
+func fakerData(columns, number string) ([]map[string]interface{}, int) {
 	itemCols := strings.Split(columns, ",")
 	fakerNumber, err := strconv.Atoi(number)
 	if err != nil {
@@ -66,9 +66,9 @@ func fakerData(columns, number string) ([]map[string]string, int) {
 	if fakerNumber >= 10000 {
 		fakerNumber = 10000
 	}
-	var results []map[string]string
+	var results []map[string]interface{}
 	for i := 0; i < fakerNumber; i++ {
-		resultMap := make(map[string]string)
+		resultMap := make(map[string]interface{})
 		for _, col := range itemCols {
 			resultMap[col] = matchFaker(strings.ToLower(col), Conn)
 		}
@@ -78,7 +78,7 @@ func fakerData(columns, number string) ([]map[string]string, int) {
 	return results, count
 }
 
-func matchFaker(col string, c *sql.DB) string {
+func matchFaker(col string, c *sql.DB) interface{} {
 	switch col {
 	case "color":
 		return faker.Color("zh_CN")

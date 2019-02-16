@@ -3,6 +3,7 @@ package faker
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 )
 
 // 航班号，航次，航班
@@ -26,7 +27,10 @@ func AirlineName() string {
 }
 
 // 航空公司代号，名称
-func AirlineInfo() string {
+func AirlineInfo() map[string]string {
 	airlineInfo := getRandValue([]string{"flight", "airline_info"})
-	return airlineInfo
+	splitAirSlice := strings.Split(airlineInfo, ",")
+	code := strings.Split(splitAirSlice[0], "=")[1]
+	name := strings.Split(splitAirSlice[1], "=")[1]
+	return map[string]string{"code": code, "name": name}
 }

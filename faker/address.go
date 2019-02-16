@@ -9,7 +9,7 @@ import (
 
 func AddressColumns(conn *sql.DB, columns ...string) []map[string]string {
 
-    num := Number(1, 752233)
+	num := Number(1, 752233)
 	cols := strings.Join(columns, ",")
 	var err error
 	var queryRows []map[string]string
@@ -27,20 +27,17 @@ func AddressColumns(conn *sql.DB, columns ...string) []map[string]string {
 	return queryRows
 }
 
-func Address(conn *sql.DB) string {
+func Address(conn *sql.DB) map[string]string {
 	colMap := AddressColumns(conn)[0]
 	colArray := []string{"area_code", "zip_code", "city_code", "area_name", "name", "short_name", "lng", "lat"}
-	colData := make([]string, len(colArray))
+	dataMap := make(map[string]string)
 	for i := 0; i < len(colArray); i++ {
 		itemCol := make([]string, 2)
 		colName := colArray[i]
 		colValue := colMap[colName]
 		itemCol[0] = colName
 		itemCol[1] = colValue
-		colText := strings.Join(itemCol, "=")
-		colData[i] = colText
+		dataMap[colName] = colValue
 	}
-	//	fmt.Println("colData", colData)
-	addressText := strings.Join(colData, ";")
-	return addressText
+	return dataMap
 }

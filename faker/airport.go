@@ -1,5 +1,7 @@
 package faker
 
+import "strings"
+
 // 机场的IATA三位编码
 func AirPort3Code() string {
 	code := getRandValue([]string{"airport", "airport_iata_code"})
@@ -31,7 +33,15 @@ func AirPortName() string {
 }
 
 // 机场信息
-func AirPortInfo() string {
+func AirPortInfo() map[string]string {
 	info := getRandValue([]string{"airport", "airport_info"})
-	return info
+	airPortMap := make(map[string]string)
+	splitInfo := strings.Split(info, ",")
+	for _, each := range splitInfo {
+		splitEach := strings.Split(each, "=")
+		key := splitEach[0]
+		value := splitEach[1]
+		airPortMap[key] = value
+	}
+	return airPortMap
 }
