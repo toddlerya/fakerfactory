@@ -12,3 +12,6 @@
 *.out
 
 .idea
+
+# log
+bin/*.log

@@ -2,7 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"io"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -11,17 +15,32 @@ import (
 	"github.com/toddlerya/fakerfactory/faker"
 )
 
+var port = "8001"
 var dbPath string = `./data/data.db`
 var Conn *sql.DB = faker.CreateConn(dbPath) // 不应该在这里建立连接, 每次请求都会建立连接, 资源消耗比较多, 后续改进
 
 func StartServer() {
+	// Disable Console Color, you don't need console color when writing the logs to file.
+	gin.DisableConsoleColor()
+
+	// Logging to a file.
+	// TODO 后续投入生产要考虑日志分割，日志大小等问题
+	f, _ := os.Create("serve.log")
+
+	// Use the following code if you need to write the logs to file and console at the same time.
+	// gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	gin.DefaultWriter = io.MultiWriter(f)
+
 	router := gin.Default()
 	router.Use(cors.Default()) // 允许任何服务ajax跨域调用
 	v1 := router.Group("api/v1")
 	{
 		v1.GET("/fakerfactory", GetFaker)
 	}
-	router.Run(":8001")
+	err := router.Run(fmt.Sprintf(":%s", port))
+	if err != nil{
+		log.Fatalf("在%s端口启动服务失败！", port)
+	}
 }
 
 func GetFaker(c *gin.Context) {
