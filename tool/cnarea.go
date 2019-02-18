@@ -12,7 +12,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var dbPath string = "../faker/data/data.db"
+var dbPath string = "../bin/data/data.db"
 
 func initSqlite() {
 	// 连接数据库

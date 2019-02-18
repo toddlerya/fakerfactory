@@ -11,7 +11,7 @@ import (
 	"github.com/toddlerya/fakerfactory/faker"
 )
 
-var dbPath string = `./faker/data/data.db`
+var dbPath string = `./data/data.db`
 var Conn *sql.DB = faker.CreateConn(dbPath) // 不应该在这里建立连接, 每次请求都会建立连接, 资源消耗比较多, 后续改进
 
 func StartServer() {
