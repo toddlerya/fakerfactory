@@ -120,3 +120,4 @@ http://{IP}:8001/api/v1/fakerfactory?number={条数}&columns={字段参数[多�
 ## 鸣谢
 - [gofakeit](https://github.com/brianvoe/gofakeit) Random fake data generator written in go.
 - [faker](https://github.com/joke2k/faker) Faker is a Python package that generates fake data for you.
+- [china_area_mysql](https://github.com/kakuilan/china_area_mysql) 中国5级行政区域mysql库
