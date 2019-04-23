@@ -167,6 +167,8 @@ func matchFaker(col string, c *sql.DB) interface{} {
 		return faker.NowTimeStamp()
 	case "useragent":
 		return faker.UserAgent()
+	case "carbrand":
+		return faker.CarBrand("zh_CN")
 	case "gapassport":
 		return "暂未支持"
 	case "twpassport":
