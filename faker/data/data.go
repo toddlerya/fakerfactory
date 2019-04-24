@@ -20,6 +20,7 @@ var Data = map[string]map[string][]string{
 	"flight":   Flights,
 	"train":    Trains,
 	"seat":     Seats,
+	"carbrand": CarBrands,
 	//	"payment":  Payment,
 	//	"hipster":  Hipster,
 	//	"beer":     Beer,
