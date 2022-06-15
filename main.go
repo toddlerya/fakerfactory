@@ -16,7 +16,7 @@ import (
 )
 
 var port = "8001"
-var dbPath string = `./data/data.db`
+var dbPath string = `./bin/data/data.db`
 var Conn *sql.DB = faker.CreateConn(dbPath) // 不应该在这里建立连接, 每次请求都会建立连接, 资源消耗比较多, 后续改进
 
 func StartServer() {
@@ -37,8 +37,8 @@ func StartServer() {
 	{
 		v1.GET("/fakerfactory", GetFaker)
 	}
-	err := router.Run(fmt.Sprintf(":%s", port))
-	if err != nil{
+	err := router.Run(fmt.Sprintf("127.0.0.1:%s", port))
+	if err != nil {
 		log.Fatalf("在%s端口启动服务失败！", port)
 	}
 }
