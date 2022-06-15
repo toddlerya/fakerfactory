@@ -25,7 +25,7 @@ func StartServer() {
 
 	// Logging to a file.
 	// TODO 后续投入生产要考虑日志分割，日志大小等问题
-	f, _ := os.Create("serve.log")
+	f, _ := os.Create("./bin/serve.log")
 
 	// Use the following code if you need to write the logs to file and console at the same time.
 	// gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
